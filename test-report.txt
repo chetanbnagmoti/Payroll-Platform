@@ -1,0 +1,14 @@
+
+> payroll-platform@1.0.0 test
+> node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand
+
+[0mPOST /auth/login [32m200[0m 10.950 ms - 207[0m
+[0mPOST /auth/login [33m401[0m 0.931 ms - 31[0m
+[0mPOST /auth/login [32m200[0m 5.626 ms - 207[0m
+[0mPOST /payrolls [32m201[0m 4.734 ms - 174[0m
+[0mGET /payrolls [32m200[0m 2.108 ms - 176[0m
+[0mGET /payrolls/iBACvaxAEKlTnMLxvDnSm [32m200[0m 1.495 ms - 174[0m
+[0mPUT /payrolls/iBACvaxAEKlTnMLxvDnSm [32m200[0m 2.550 ms - 215[0m
+[0mDELETE /payrolls/iBACvaxAEKlTnMLxvDnSm [32m204[0m 3.329 ms - -[0m
+[0mPOST /auth/login [32m200[0m 1.656 ms - 207[0m
+[0mPOST /payrolls/net [32m200[0m 2.758 ms - 71[0m
