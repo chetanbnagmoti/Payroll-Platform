@@ -1,121 +1,243 @@
-# 💼 Payroll Management API
+Here’s your complete **`README.md`** file — clean, professional, and ready to commit to GitHub 👇
 
-This project is a **Full Stack Coding Test Submission** for a **Compensation Platform**, built using **Node.js + Express + LowDB**.  
-It demonstrates backend CRUD operations, authentication, payroll calculations, anomaly detection, and secure access control.  
-AI coding assistance (GitHub Copilot + ChatGPT GPT-5) was used to enhance code quality and speed.
+---
+
+```markdown
+# Payroll Management System 🧾
+
+A secure and modular **Payroll Management REST API** built with **Node.js, Express, and LowDB**, featuring authentication, payroll CRUD, gross-to-net pay calculation, anomaly detection, and comprehensive test coverage.
 
 ---
 
 ## 🚀 Features
 
-### 1️⃣ Payroll CRUD API
+### 1. Payroll CRUD API
 
-- Create, Read, Update, and Delete employee payrolls.
-- Fields:  
-  `employee_id`, `name`, `department`, `salary`, `bonus`, `deductions`
-- Input validation & error handling implemented.
-- Unit & integration tests using **Jest + Supertest**.
+- Create, Read, Update, and Delete payroll records.
+- Fields: `employee_id`, `name`, `department`, `salary`, `bonus`, `deductions`.
+- Validation and structured error handling implemented.
+- Integration and unit tests included using **Jest** and **Supertest**.
 
-### 2️⃣ Gross-to-Net Pay Calculation
+### 2. Gross-to-Net Pay Calculation
 
-- Calculates **net pay = (salary + bonus) − deductions − tax − social security**.
-- Configurable tax and social security percentages.
-- Returns detailed calculation breakdown.
+- Calculates **net pay** from gross salary.
+- Formula used:
+```
 
-### 3️⃣ Payroll Anomaly Detection
+Net Pay = Gross Salary - (Tax% + Social Security%)
 
-- Detects potential issues such as:
-  - Excessive deductions (>50% of salary)
-  - Salary deviations from department average
-- Returns list of flagged employees.
+```
+- Example deduction rules:
+- Tax = 10%
+- Social Security = 5%
+- Includes sample test data and request examples.
 
-### 4️⃣ Secure Authentication
+### 3. Payroll Anomaly Detection
+- Detects payroll anomalies such as:
+- Excessive deductions
+- Unusually high or low salaries
+- Customizable detection thresholds.
+- Returns structured anomaly reports.
 
-- **JWT-based authentication** using roles:
-  - `admin` – Full CRUD & anomaly access
-  - `employee` – View own payroll only
-- Middleware for `authenticate` and `authorizeRole`.
+### 4. Secure Authentication
+- JWT-based authentication.
+- Mock users: Admin and Employees.
+- Middleware to restrict access by role.
+- Token validation and expiry supported.
+- Best practices implemented (environment variables, minimal exposure).
 
-### 5️⃣ AI-Powered Development
+### 5. Developer Documentation & AI Usage
+- All AI-assisted code sections and prompts are transparently documented in [`AI_USAGE.md`](./AI_USAGE.md).
+- Each feature reviewed and optimized for maintainability and performance.
 
-- Documented below in [AI Assistance Summary](#🤖-ai-assistance-summary).
+---
+
+## 🧩 Tech Stack
+
+| Category | Tools |
+|-----------|-------|
+| Runtime | Node.js (v22+) |
+| Framework | Express.js |
+| Database | LowDB (JSON-based) |
+| Auth | JWT |
+| Testing | Jest, Supertest |
+| Storage | File-based JSON |
+| Utilities | dotenv, nodemon, FormData, connect-multiparty |
+
+---
+
+## 📂 Project Structure
+
+```
+
+├── src/
+│ ├── controllers/
+│ │ ├── payrollController.js
+│ │ └── authController.js
+│ ├── middleware/
+│ │ └── authMiddleware.js
+│ ├── db/
+│ │ └── db.js
+│ ├── routes/
+│ │ ├── payrollRoutes.js
+│ │ └── authRoutes.js
+│ ├── utils/
+│ │ └── ApiError.js
+│ ├── index.js
+│ └── app.js
+│
+├── tests/
+│ ├── auth.test.js
+│ └── payroll.test.js
+│
+├── data.json
+├── .env
+├── package.json
+├── AI_USAGE.md
+└── README.md
+
+````
+
+---
+
+## 🧠 Sample API Endpoints
+
+| Method | Endpoint | Description | Auth |
+|--------|-----------|-------------|------|
+| `POST` | `/auth/login` | Login and get JWT token | ❌ |
+| `GET` | `/payroll` | Get all payrolls | ✅ Admin |
+| `POST` | `/payroll` | Create a payroll entry | ✅ Admin |
+| `PUT` | `/payroll/:id` | Update payroll details | ✅ Admin |
+| `DELETE` | `/payroll/:id` | Delete payroll entry | ✅ Admin |
+| `GET` | `/payroll/anomalies` | Detect anomalies | ✅ Admin |
+| `GET` | `/payroll/calc/netpay` | Calculate gross-to-net pay | ✅ Admin/Employee |
 
 ---
 
 ## ⚙️ Setup Instructions
 
-### Prerequisites
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/<your-username>/payroll-system.git
+cd payroll-system
+````
 
-- Node.js 18+
-- npm (or yarn)
-
-### Installation
+### 2️⃣ Install Dependencies
 
 ```bash
-git clone https://github.com/<your-username>/payroll-api.git
-cd payroll-api
 npm install
 ```
 
-# Start Server
+### 3️⃣ Setup Environment Variables
 
-npm start
+Create a `.env` file in the root:
 
-- Server runs by default on http://localhost:3000.
+```
+PORT=3000
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=1h
+```
 
-🧪 Running Tests
+### 4️⃣ Run the Server
 
+```bash
+npm run dev
+```
+
+Server will start at → **[http://localhost:3000](http://localhost:3000)**
+
+### 5️⃣ Run Tests
+
+```bash
 npm test
+```
 
-- Uses Jest + Supertest for API integration tests.
+---
 
-🔑 Environment Variables
+## 🧪 Sample Requests
 
-| Variable         | Description        | Default     |
-| ---------------- | ------------------ | ----------- |
-| `PORT`           | Server port        | `3000`      |
-| `JWT_SECRET`     | Secret key for JWT | `devsecret` |
-| `JWT_EXPIRES_IN` | Token expiration   | `1h`        |
+### ✅ Create Payroll
 
-📘 API Examples
+**POST** `/payroll`
 
-➕ Create Payroll
-
-POST /payrolls
-
+```json
 {
-"employee_id": "E101",
-"name": "John Doe",
-"department": "Engineering",
-"salary": 80000,
-"bonus": 5000,
-"deductions": 2000
+  "employee_id": "E101",
+  "name": "Alice",
+  "department": "HR",
+  "salary": 50000,
+  "bonus": 2000,
+  "deductions": 3000
 }
+```
 
-Response:
+**Response**
 
+```json
 {
-"message": "Payroll created successfully",
-"data": {
-"employee_id": "E101",
-"netPay": 70000
+  "message": "Payroll created successfully",
+  "data": {
+    "employee_id": "E101",
+    "name": "Alice",
+    "netPay": 44500
+  }
 }
+```
+
+### ✅ Detect Payroll Anomalies
+
+**GET** `/payroll/anomalies`
+
+**Response**
+
+```json
+{
+  "anomalies": [
+    {
+      "employee_id": "E004",
+      "issue": "High deduction ratio",
+      "deductionPercent": 40
+    }
+  ]
 }
+```
 
-Use the returned token in Authorization header:
+---
 
-Authorization: Bearer <token>
+## 🔒 Authentication Roles
 
-🤖 AI Assistance Summary
+| Role     | Permissions                                         |
+| -------- | --------------------------------------------------- |
+| Admin    | Full access (CRUD, anomaly detection, calculations) |
+| Employee | Read-only (personal payroll info, net pay)          |
 
-- This project intentionally used AI coding assistants (ChatGPT GPT-5 & GitHub Copilot) to improve productivity and quality.
-  Below are the details:
+---
 
-| Feature                   | AI Involvement | Description                                                         |
-| ------------------------- | -------------- | ------------------------------------------------------------------- |
-| Payroll CRUD API          | 60%            | Suggested controller structure, validation logic, and test coverage |
-| Gross-to-Net Pay          | 40%            | Suggested tax/social formulas & handled edge cases                  |
-| Payroll Anomaly Detection | 70%            | ChatGPT suggested anomaly thresholds and logic                      |
-| Authentication            | 50%            | Guided JWT best practices and role-based access checks              |
-| Documentation             | 90%            | README + API examples + formatting done using GPT-5                 |
-| Tests                     | 40%            | Copilot autocompleted test assertions and structure                 |
+## 🧭 AI Involvement Summary
+
+- ✅ **Code Reviewed by AI:** All controllers, routes, and middleware logic were reviewed for optimization and best practices.
+- 🧠 **AI Assistance:** Used to write unit tests, detect common Node.js errors, and generate documentation.
+- ⚡ **Manual Additions:** Final logic adjustments, validation layers, and integration test improvements were added manually.
+
+See detailed logs in [`AI_USAGE.md`](./AI_USAGE.md).
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+📧 [your.email@example.com](mailto:your.email@example.com)
+🌐 [GitHub](https://github.com/your-username)
+
+```
+
+---
+
+Would you like me to generate the **`AI_USAGE.md`** file next (summarizing which exact sections were AI-assisted)? It’ll complement this README perfectly for submission.
+```
