@@ -1,0 +1,18 @@
+{
+  "payrolls": [],
+  "users": [
+    {
+      "id": "admin-1",
+      "username": "admin",
+      "password": "adminpass",
+      "role": "admin"
+    },
+    {
+      "id": "emp-1",
+      "username": "alice",
+      "password": "alicepass",
+      "role": "employee",
+      "employeeId": "E001"
+    }
+  ]
+}
